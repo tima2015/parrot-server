@@ -20,7 +20,6 @@ public class MessageHistory {
     private final ConcurrentLinkedQueue<Message> history = new ConcurrentLinkedQueue<>();
     private final Set<MessageWriter> writers;
     @Getter
-    @Setter
     private volatile int flushThreshold;
     private final AtomicInteger count = new AtomicInteger(0);
 
@@ -60,5 +59,12 @@ public class MessageHistory {
         }
         count.addAndGet(-tmp.size());
         log.debug("flush() done");
+    }
+
+    public void setFlushThreshold(int flushThreshold) {
+        if (flushThreshold < 0) {
+            throw new IllegalArgumentException("flushThreshold value must be greater than or equal to 0!");
+        }
+        this.flushThreshold = flushThreshold;
     }
 }
