@@ -25,7 +25,7 @@ public class MessageHistory {
     @Autowired
     public MessageHistory(Set<MessageWriter> writers,  @Value("${history-writer.flush-threshold:100}") int flushThreshold) {
         this.writers = writers;
-        this.flushThreshold = flushThreshold;
+        setFlushThreshold(flushThreshold);
     }
 
     public void receive(Message message) {
