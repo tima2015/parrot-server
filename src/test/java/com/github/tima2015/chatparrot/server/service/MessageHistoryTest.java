@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -53,7 +54,7 @@ class MessageHistoryTest {
 
     @Test
     @DisplayName("Collect messages counted equal flushThreshold. flush() must call")
-    void shouldFlushAutomaticallyWhenThresholdReached() {
+    void shouldFlushAutomaticallyWhenThresholdReached() throws IOException {
         List<Message> expectedList = new ArrayList<>();
         for (int i = 1; i <= messageHistory.getFlushThreshold(); i++) {
             Message msg = new Message(null, null, null, null, null, null);
@@ -67,7 +68,7 @@ class MessageHistoryTest {
 
     @Test
     @DisplayName("Flush immediately when threshold is 0")
-    void shouldFlushImmediatelyWhenThresholdZero() {
+    void shouldFlushImmediatelyWhenThresholdZero() throws IOException {
         messageHistory.setFlushThreshold(0);
         List<Message> expectedList = new ArrayList<>();
         Message msg = new Message(null, null, null, null, null, null);
@@ -79,7 +80,7 @@ class MessageHistoryTest {
 
     @Test
     @DisplayName("Manual flush message")
-    void shouldFlushManually() {
+    void shouldFlushManually() throws IOException {
         Message msg = new Message(null, null, null, null, null, null);
         messageHistory.receive(msg);
         messageHistory.flush();
@@ -96,7 +97,7 @@ class MessageHistoryTest {
 
     @Test
     @DisplayName("Exception in one of writers don't break process")
-    void shouldContinueFlushingIfOneWriterFails() {
+    void shouldContinueFlushingIfOneWriterFails() throws IOException {
         Message msg = new Message(null, null, null, null, null, null);
         messageHistory.receive(msg);
 
