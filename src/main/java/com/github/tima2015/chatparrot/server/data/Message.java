@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 public class Message {
     private final String id;
     private final String sourceId;
-    private final String channel;
+    private final String channelId;
+    private final String author;
     private final String content;
     private final LocalDateTime timestamp;
 }

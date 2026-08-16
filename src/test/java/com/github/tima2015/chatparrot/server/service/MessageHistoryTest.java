@@ -46,7 +46,7 @@ class MessageHistoryTest {
     @DisplayName("Collect messages counted less that flushThreshold. flush() must not call")
     void shouldAccumulateMessagesWithoutFlushing() {
         for (int i = 1; i < messageHistory.getFlushThreshold(); i++) {
-            messageHistory.receive(new Message(null, null, null, null, null));
+            messageHistory.receive(new Message(null, null, null, null, null, null));
         }
         verifyNoInteractions(mockWriter1, mockWriter2);
     }
@@ -56,7 +56,7 @@ class MessageHistoryTest {
     void shouldFlushAutomaticallyWhenThresholdReached() {
         List<Message> expectedList = new ArrayList<>();
         for (int i = 1; i <= messageHistory.getFlushThreshold(); i++) {
-            Message msg = new Message(null, null, null, null, null);
+            Message msg = new Message(null, null, null, null, null, null);
             expectedList.add(msg);
             messageHistory.receive(msg);
         }
@@ -70,7 +70,7 @@ class MessageHistoryTest {
     void shouldFlushImmediatelyWhenThresholdZero() {
         messageHistory.setFlushThreshold(0);
         List<Message> expectedList = new ArrayList<>();
-        Message msg = new Message(null, null, null, null, null);
+        Message msg = new Message(null, null, null, null, null, null);
         expectedList.add(msg);
         messageHistory.receive(msg);
         verify(mockWriter1, times(1)).write(expectedList);
@@ -80,7 +80,7 @@ class MessageHistoryTest {
     @Test
     @DisplayName("Manual flush message")
     void shouldFlushManually() {
-        Message msg = new Message(null, null, null, null, null);
+        Message msg = new Message(null, null, null, null, null, null);
         messageHistory.receive(msg);
         messageHistory.flush();
         verify(mockWriter1, times(1)).write(List.of(msg));
@@ -97,7 +97,7 @@ class MessageHistoryTest {
     @Test
     @DisplayName("Exception in one of writers don't break process")
     void shouldContinueFlushingIfOneWriterFails() {
-        Message msg = new Message(null, null, null, null, null);
+        Message msg = new Message(null, null, null, null, null, null);
         messageHistory.receive(msg);
 
         doThrow(new RuntimeException("Test error")).when(mockWriter1).write(anyList());
