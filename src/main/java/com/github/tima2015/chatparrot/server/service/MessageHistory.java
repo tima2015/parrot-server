@@ -1,5 +1,6 @@
 package com.github.tima2015.chatparrot.server.service;
 
+import com.github.tima2015.chatparrot.server.api.MessageWriter;
 import com.github.tima2015.chatparrot.server.data.Message;
 import jakarta.annotation.PreDestroy;
 import lombok.Getter;

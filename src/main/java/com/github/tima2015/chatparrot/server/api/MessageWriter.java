@@ -1,4 +1,4 @@
-package com.github.tima2015.chatparrot.server.service;
+package com.github.tima2015.chatparrot.server.api;
 
 import com.github.tima2015.chatparrot.server.data.Message;
 

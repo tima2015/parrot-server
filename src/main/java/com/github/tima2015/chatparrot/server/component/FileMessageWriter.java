@@ -1,7 +1,7 @@
 package com.github.tima2015.chatparrot.server.component;
 
 import com.github.tima2015.chatparrot.server.data.Message;
-import com.github.tima2015.chatparrot.server.service.MessageWriter;
+import com.github.tima2015.chatparrot.server.api.MessageWriter;
 import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
