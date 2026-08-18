@@ -18,14 +18,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class MessageHistory {
     private final ConcurrentLinkedQueue<Message> history = new ConcurrentLinkedQueue<>();
-    private final Set<MessageWriter> writers;
+    private final MessageWriterManager writerManager;
     @Getter
     private volatile int flushThreshold;
     private final AtomicInteger count = new AtomicInteger(0);
 
     @Autowired
-    public MessageHistory(Set<MessageWriter> writers,  @Value("${history-writer.flush-threshold:100}") int flushThreshold) {
-        this.writers = writers;
+    public MessageHistory(MessageWriterManager writerManager,  @Value("${history-writer.flush-threshold:100}") int flushThreshold) {
+        this.writerManager = writerManager;
         setFlushThreshold(flushThreshold);
     }
 
@@ -50,7 +50,7 @@ public class MessageHistory {
             return;
         }
         tmp = Collections.unmodifiableList(tmp);
-        for (MessageWriter writer : writers) {
+        for (MessageWriter writer : writerManager.getActiveWriters()) {
             try {
                 writer.write(tmp);
             } catch (Exception e) {

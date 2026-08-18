@@ -11,10 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 
@@ -31,15 +28,17 @@ class MessageHistoryTest {
 
     @BeforeEach
     void setUp() {
-        Set<MessageWriter> writers = Set.of(mockWriter1, mockWriter2);
+        Map<String, MessageWriter> writers = Map.of("mockWriter1", mockWriter1, "mockWriter2", mockWriter2);
+        MessageWriterManager manager = new MessageWriterManager(writers, "mockWriter1, mockWriter2");
         int testThreshold = 3;
-        messageHistory = new MessageHistory(writers, testThreshold);
+        messageHistory = new MessageHistory(manager, testThreshold);
     }
 
     @Test
     @DisplayName("Checking validation on setting flushThreshold value via constructor and setter")
     void checkFlushThreshold() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new MessageHistory(new HashSet<>(), -1));
+        MessageWriterManager manager = new MessageWriterManager(new HashMap<>(), "");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new MessageHistory(manager, -1));
         Assertions.assertThrows(IllegalArgumentException.class, () -> messageHistory.setFlushThreshold(-1));
         messageHistory.setFlushThreshold(0);
     }
