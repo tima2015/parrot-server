@@ -1,12 +1,16 @@
 package com.github.tima2015.chatparrot.server.data;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
 @Data
+@Table
 public class Message {
-    private long id;
+    @Id
+    private Long id;
     private String sourceId;
     private String channelId;
     private String author;
@@ -21,8 +25,11 @@ public class Message {
         this.timestamp = timestamp;
     }
 
-    public Message(long id, String sourceId, String channelId, String author, String content, LocalDateTime timestamp) {
+    public Message(Long id, String sourceId, String channelId, String author, String content, LocalDateTime timestamp) {
         this(sourceId, channelId, author, content, timestamp);
         this.id = id;
+    }
+
+    public Message() {
     }
 }
