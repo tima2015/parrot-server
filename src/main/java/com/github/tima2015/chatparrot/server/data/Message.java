@@ -6,10 +6,23 @@ import java.time.LocalDateTime;
 
 @Data
 public class Message {
-    private final String id;
-    private final String sourceId;
-    private final String channelId;
-    private final String author;
-    private final String content;
-    private final LocalDateTime timestamp;
+    private long id;
+    private String sourceId;
+    private String channelId;
+    private String author;
+    private String content;
+    private LocalDateTime timestamp;
+
+    public Message(String sourceId, String channelId, String author, String content, LocalDateTime timestamp) {
+        this.sourceId = sourceId;
+        this.channelId = channelId;
+        this.author = author;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
+
+    public Message(long id, String sourceId, String channelId, String author, String content, LocalDateTime timestamp) {
+        this(sourceId, channelId, author, content, timestamp);
+        this.id = id;
+    }
 }

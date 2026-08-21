@@ -52,10 +52,9 @@ class FileMessageWriterTest {
     @Test
     @DisplayName("Single message formatted correctly")
     void singleMessageFormattedCorrectly() throws IOException {
-        Message msg = new Message("id1", "src", "ch1", "author", "Hello!", LocalDateTime.MIN);
+        Message msg = new Message("src", "ch1", "author", "Hello!", LocalDateTime.MIN);
         writer.write(List.of(msg));
         String text = Files.readString(testOutputFile.toPath());
-        assertTrue(text.contains("id1"));
         assertTrue(text.contains("src"));
         assertTrue(text.contains("ch1"));
         assertTrue(text.contains("author"));
@@ -65,19 +64,17 @@ class FileMessageWriterTest {
     @Test
     @DisplayName("Check writing after reopened file is correct")
     void dataContinueWriteCorrect() throws IOException {
-        Message msg0 = new Message("id1", "src1", "ch1", "author1", "Hello!", LocalDateTime.MIN);
-        Message msg1 = new Message("id2", "src2","ch2" ,"author2", "🤓", LocalDateTime.MIN);
+        Message msg0 = new Message("src1", "ch1", "author1", "Hello!", LocalDateTime.MIN);
+        Message msg1 = new Message("src2","ch2" ,"author2", "🤓", LocalDateTime.MIN);
 
         writer.write(List.of(msg0));
         writer = new FileMessageWriter(testOutputFile);
         writer.write(List.of(msg1));
         String text = Files.readString(testOutputFile.toPath());
-        assertTrue(text.contains("id1"));
         assertTrue(text.contains("src1"));
         assertTrue(text.contains("ch1"));
         assertTrue(text.contains("author1"));
         assertTrue(text.contains("Hello!"));
-        assertTrue(text.contains("id2"));
         assertTrue(text.contains("src2"));
         assertTrue(text.contains("ch2"));
         assertTrue(text.contains("author2"));

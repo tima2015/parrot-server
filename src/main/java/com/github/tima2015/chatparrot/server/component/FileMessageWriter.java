@@ -20,7 +20,7 @@ public class FileMessageWriter implements MessageWriter {
 
     private static final DateTimeFormatter FILE_NAME_FORMATTER =
             DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-    private static final String MESSAGE_FORMAT = "[%s][%s][%s][%s][%s][%s]";
+    private static final String MESSAGE_FORMAT = "[%s][%s][%s][%s][%s]";
 
     private final File output;
 
@@ -45,7 +45,6 @@ public class FileMessageWriter implements MessageWriter {
     private String formatMessage(Message message) {
         return MESSAGE_FORMAT.formatted(
                 message.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-                message.getId(),
                 message.getSourceId(),
                 message.getChannelId(),
                 message.getAuthor(),
