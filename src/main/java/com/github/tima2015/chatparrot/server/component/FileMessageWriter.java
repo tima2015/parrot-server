@@ -2,7 +2,6 @@ package com.github.tima2015.chatparrot.server.component;
 
 import com.github.tima2015.chatparrot.server.data.Message;
 import com.github.tima2015.chatparrot.server.api.MessageWriter;
-import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -56,11 +55,5 @@ public class FileMessageWriter implements MessageWriter {
     public void write(List<Message> messages) throws IOException{
         List<String> lines = messages.stream().map(this::formatMessage).toList();
         Files.write(output.toPath(), lines, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-    }
-
-    @PreDestroy
-    @Override
-    public void close() {
-        // for future optimization
     }
 }

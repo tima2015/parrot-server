@@ -27,7 +27,6 @@ class FileMessageWriterTest {
 
     @AfterEach
     void tearDown() {
-        writer.close();
         if (testOutputFile.exists()) {
             assertTrue(testOutputFile.delete());
         }
