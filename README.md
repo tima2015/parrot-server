@@ -18,7 +18,7 @@ Client adapters for different games are listed below.
 ## Roadmap
 | Task               | Status    |
 |--------------------|-----------|
-| Message history    | 🟡 WIP    |
+| Message history    | ✅ Done    |
 | Receive messages   | 🟡 WIP    |
 | Broadcast messages | 🟡 WIP    |
 | Tests              | 🟡 WIP    |
