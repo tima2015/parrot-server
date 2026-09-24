@@ -1,5 +1,6 @@
 package com.github.tima2015.chatparrot.server.service;
 
+import com.github.tima2015.chatparrot.server.api.ClientAuthenticator;
 import com.github.tima2015.chatparrot.server.data.Client;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,14 +13,20 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class ClientManager {
 
+    private final ClientAuthenticator authenticator;
+
     private final Map<WebSocketSession, Client> clientMap = new ConcurrentHashMap<>();
     private final Map<WebSocketSession, Client> historyMap = new ConcurrentHashMap<>();
+
+    public ClientManager(ClientAuthenticator authenticator) {
+        this.authenticator = authenticator;
+    }
 
     public Client getClient(WebSocketSession session) {
         return clientMap.getOrDefault(session, historyMap.get(session));
     }
     public Client registerSession(WebSocketSession session) {
-        Client client = new Client();//todo authorization
+        Client client = authenticator.authenticate(session);
         clientMap.put(session, client);
         return client;
     }
